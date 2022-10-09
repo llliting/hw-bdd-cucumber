@@ -55,10 +55,10 @@ Then /^I should (not )?see the following movies: (.*)$/ do |no, movie_list|
     else
         expect(ans).to be false
     end
-    
     # Take a look at web_steps.rb Then /^(?:|I )should see "([^"]*)"$/
   end
 
+  
 Then /I should see all the movies/ do
   # Make sure that all the movies in the app are visible in the table
   num = page.all('table#movies tbody tr').length
