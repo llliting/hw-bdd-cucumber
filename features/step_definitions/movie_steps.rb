@@ -32,7 +32,6 @@ When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
   # HINT: use String#split to split up the rating_list, then
   #   iterate over the ratings and reuse the "When I check..." or
   #   "When I uncheck..." steps in lines 89-95 of web_steps.rb
-  puts(rating_list)
   rating_list.split(', ').each do |r|
     if !uncheck.nil?
       uncheck "ratings_#{r}"
@@ -40,19 +39,32 @@ When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
       check "ratings_#{r}"
     end
   end
-  #pending "Fill in this step in movie_steps.rb"
 end
 
 # Part 2, Step 3
+
+
 Then /^I should (not )?see the following movies: (.*)$/ do |no, movie_list|
-  # Take a look at web_steps.rb Then /^(?:|I )should see "([^"]*)"$/
-  pending "Fill in this step in movie_steps.rb"
-end
+    ans = true
+    movie_list.split(",").each do |movie|
+      ans = ans && (page.body.include? movie.strip)
+    end
+  
+    if no.nil?
+        expect(ans).to be true
+    else
+        expect(ans).to be false
+    end
+    
+    # Take a look at web_steps.rb Then /^(?:|I )should see "([^"]*)"$/
+  end
 
 Then /I should see all the movies/ do
   # Make sure that all the movies in the app are visible in the table
-  pending "Fill in this step in movie_steps.rb"
+  num = page.all('table#movies tbody tr').length
+  expect(num).to eq Movie.count
 end
+
 
 ### Utility Steps Just for this assignment.
 
